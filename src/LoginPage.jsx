@@ -28,6 +28,9 @@ export default function LoginPage({setUser}) {
 		const { data } = await axios.get(
 	      "http://209.97.175.170:8000/api/users/?format=json"
 	    )
+		if (data.length === 0){
+			alert("No connection")
+		}
 
 	    setAccounts(data)
 	    accounts.map(user => {
