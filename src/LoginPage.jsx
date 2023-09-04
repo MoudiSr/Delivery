@@ -25,7 +25,10 @@ export default function LoginPage({setUser}) {
 	React.useEffect(() => {
 		fetch("http://209.97.175.170:8000/api/users/?format=json")
 		.then(response => response.json())
-		.then(data => setAccounts(data))
+		.then(data => {
+			setAccounts(data)
+			alert(data)
+		})
 	}, [])
 
 	const handleSubmit = async (e) => {
@@ -36,10 +39,11 @@ export default function LoginPage({setUser}) {
 				setUser(user.username)
 				localStorage.setItem("user", user.username)
 				navigate("/dashboard")
-			} else {
-				setOpen(true)
 			}
 		})
+		if (accounts.length == 0) {
+			setOpen(true)
+		}
 	}
 
 	React.useEffect(() => {
