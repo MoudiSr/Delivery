@@ -27,7 +27,7 @@ export default function LoginPage({setUser}) {
 		e.preventDefault()
 		try {
 		const { data } = await axios.get(
-	      "http://209.97.175.170:8010/api/users/?format=json"
+	      "http://209.97.175.170:8000/api/users/?format=json"
 	    )
 		setAccounts(data)
 		} catch (error){
