@@ -25,7 +25,7 @@ export default function LoginPage({setUser}) {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		
-		const response = await fetch("http://143.198.216.137:8000/api/users/?format=json")
+		const response = await fetch("https://143.198.216.137/api/users/?format=json")
 		const jsonData = await response.json()
 		setAccounts(jsonData)
 	    
