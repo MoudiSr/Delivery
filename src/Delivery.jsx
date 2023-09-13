@@ -53,7 +53,7 @@ export default function Delivery({value, setValue, user}) {
 	}
 
 	const fetchOrders = async () => {
-	    const response = await fetch("http://143.198.216.137:8000/api/orders/?format=json")
+	    const response = await fetch("https://143.198.216.137/api/orders/?format=json")
 		const jsonData = await response.json()
 	    setOrders(jsonData)
 	}
@@ -80,7 +80,7 @@ export default function Delivery({value, setValue, user}) {
 
 
 		const data = {order_id: orderId, dealer_name: dealerName, client_name: clientName, location: location, order_price: orderPrice, order_currency: orderCurrency, delivery_LBP: deliveryLBP, delivery_Dollar: deliveryDollar, final_amount_LBP: finalAmountInLBP, final_amount_Dollar: finalAmountInDollar, driver_tax: driverTax, driver_tax_Currency: driverTaxCurrency, remaining_amount_LBP: remainingAmountInLBP, remaining_amount_Dollar: remainingAmountInDollar, items: items, date: date, user: user}
-		const response = await axios.post('http://143.198.216.137:8000/api/orders/', data)
+		const response = await axios.post('https://143.198.216.137/api/orders/', data)
 		setOpen(false)
 		
 		setDealerName("")
