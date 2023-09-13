@@ -13,7 +13,7 @@ function loadFile(url, callback) {
 const ExportToWord = ({orders}) => {
 
   const generateDocument = () => {
-           loadFile("https://download1479.mediafire.com/41ha4wr9letgqdhpWI8_Gwm-5vesiUylEfKStXdGyO8GvCPcn1hcdSk-16CvLggSdFjP2LU2l70xMXSa-ph5-xTWSvSunPKUbn5JgeEg8qZSqw4gYr4CAET_oERaFJ52u5s7z-SgWDdIgpaNP3z6TBXKGoRQnBd-sajR2WyCDtqD/loibug5rlj70j4w/tableAndLoop2+%285%29.docx", function (
+           loadFile("https://drive.google.com/uc?export=download&id=1HVb2k_q7nReAAITjcyCp3Jjx_DxgDukL", function (
              error,
              content
            ) {
