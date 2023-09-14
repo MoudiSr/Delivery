@@ -13,7 +13,7 @@ function loadFile(url, callback) {
 const ExportToWord = ({orders}) => {
 
   const generateDocument = () => {
-           loadFile("http://143.198.216.137:8003/tableAndLoop2.docx", function (
+           loadFile("https://143.198.216.137:4443/tableAndLoop2.docx", function (
              error,
              content
            ) {
