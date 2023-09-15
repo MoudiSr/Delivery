@@ -47,7 +47,7 @@ const MainPage = ({value, setValue}) => {
 			if (order.driver_tax_Currency === 'dollar'){
 				setExpensesInDollar(prevExpenses => prevExpenses+order.driver_tax)
 			} else {
-				setExpensesInDollar(prevExpenses => prevExpenses+order.driver_tax)
+				setExpensesInLBP(prevExpenses => prevExpenses+order.driver_tax)
 			}
 		})
     	setProfitInDollar(deliveryAmountInDollar-expensesInDollar)
