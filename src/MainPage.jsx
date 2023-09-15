@@ -22,8 +22,8 @@ const MainPage = ({value, setValue}) => {
 	    setDeliveryAmountInDollar(0)
 		setDeliveryAmountInLBP(0)
 	    orders.map((order) => {
-			setDeliveryAmountInDollar(prevAmount => prevAmount+order.delivery_Dollar)
-			setDeliveryAmountInLBP(prevAmount => prevAmount+order.delivery_LBP)
+			setDeliveryAmountInDollar(prevAmount => order.delivery_currency === "dollar" ? prevAmount+order.delivery : prevAmount+0)
+			setDeliveryAmountInLBP(prevAmount => order.delivery_currency !== "dollar" ? prevAmount+order.delivery : prevAmount+0)
 		})
 	}
 	

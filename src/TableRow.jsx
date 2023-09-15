@@ -17,7 +17,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
-export default function MyTableRow({id, order_id, dealer_name, client_name, location, order_price, order_currency, delivery_LBP, delivery_Dollar, final_amount_LBP, final_amount_Dollar, driver_tax, driver_tax_Currency, remaining_amount_LBP, remaining_amount_Dollar, items, date, user, status}) {
+export default function MyTableRow({id, order_id, dealer_name, client_name, location, order_Dollar, order_LBP, delivery, delivery_currency, final_amount_LBP, final_amount_Dollar, driver_tax, driver_tax_Currency, remaining_amount_LBP, remaining_amount_Dollar, items, date, user, status}) {
 	
 	const { setOrders, fetchOrders } = React.useContext(OrdersContext)
 
@@ -37,10 +37,10 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 			dealer_name, 
 			client_name, 
 			location, 
-			order_price, 
-			order_currency, 
-			delivery_LBP, 
-			delivery_Dollar, 
+			order_Dollar, 
+			order_LBP, 
+			delivery, 
+			delivery_currency, 
 			final_amount_LBP,
 			final_amount_Dollar, 
 			driver_tax,
@@ -67,8 +67,8 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{client_name}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{location}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{items}</TableCell>
-			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{order_price.toLocaleString()}{order_currency === 'dollar' ? '$' : " LBP"}</TableCell>
-			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{delivery_Dollar.toLocaleString()} $ / {delivery_LBP.toLocaleString()} LBP</TableCell>
+			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{order_Dollar.toLocaleString()} $ / {order_LBP.toLocaleString()} LBP</TableCell>
+			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{delivery.toLocaleString()}{delivery_currency === 'dollar' ? '$' : " LBP"}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{final_amount_Dollar.toLocaleString()} $ / {final_amount_LBP.toLocaleString()} LBP</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{driver_tax.toLocaleString()}{driver_tax_Currency === 'dollar' ? '$' : ' LBP'}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{remaining_amount_Dollar.toLocaleString()} $ / {remaining_amount_LBP.toLocaleString()} LBP</TableCell>

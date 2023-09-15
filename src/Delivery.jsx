@@ -32,10 +32,10 @@ export default function Delivery({value, setValue, user}) {
 	const [dealerName, setDealerName] = React.useState("")
 	const [clientName, setClientName] = React.useState("")
 	const [location, setLocation] = React.useState("")
-	const [orderPrice, setOrderPrice] = React.useState(0)
-	const [orderCurrency, setOrderCurrency] = React.useState("")
-	const [deliveryLBP, setDeliveryLBP] = React.useState(0)
-	const [deliveryDollar, setDeliveryDollar] = React.useState(0)
+	const [orderDollar, setOrderDollar] = React.useState(0)
+	const [orderLBP, setOrderLBP] = React.useState("")
+	const [delivery, setDelivery] = React.useState(0)
+	const [deliveryCurrency, setDeliveryCurrency] = React.useState(0)
 	const [driverTax, setDriverTax] = React.useState(0)
 	const [driverTaxCurrency, setDriverTaxCurrency] = React.useState('')
 	const [items, setItems] = React.useState("")
@@ -66,34 +66,23 @@ export default function Delivery({value, setValue, user}) {
 	const addOrder = async (e) => {
 		e.preventDefault()
 
-		let finalAmountInDollar = orderCurrency === 'dollar' ? parseFloat(orderPrice) : 0
-		finalAmountInDollar += parseFloat(deliveryDollar)
+		let finalAmountInDollar = deliveryCurrency === 'dollar' ? parseFloat(delivery) : 0
+		finalAmountInDollar += parseFloat(orderDollar)
 
-		let finalAmountInLBP = orderCurrency !== 'dollar' ? parseFloat(orderPrice) : 0
-		finalAmountInLBP += parseFloat(deliveryLBP)
+		let finalAmountInLBP = deliveryCurrency !== 'dollar' ? parseFloat(delivery) : 0
+		finalAmountInLBP += parseFloat(orderLBP)
 
-		let remainingAmountInDollar = parseFloat(deliveryDollar)
+		let remainingAmountInDollar = deliveryCurrency === 'dollar' ? parseFloat(delivery) : 0
 		remainingAmountInDollar -= driverTaxCurrency === 'dollar' ? parseFloat(driverTax) : 0
 
-		let remainingAmountInLBP = parseFloat(deliveryLBP)
+		let remainingAmountInLBP = deliveryCurrency !== 'dollar' ? parseFloat(delivery) : 0
 		remainingAmountInLBP -= driverTaxCurrency !== 'dollar' ? parseFloat(driverTax) : 0
 
 
-		const data = {order_id: orderId, dealer_name: dealerName, client_name: clientName, location: location, order_price: orderPrice, order_currency: orderCurrency, delivery_LBP: deliveryLBP, delivery_Dollar: deliveryDollar, final_amount_LBP: finalAmountInLBP, final_amount_Dollar: finalAmountInDollar, driver_tax: driverTax, driver_tax_Currency: driverTaxCurrency, remaining_amount_LBP: remainingAmountInLBP, remaining_amount_Dollar: remainingAmountInDollar, items: items, date: date, user: user}
+		const data = {order_id: orderId, dealer_name: dealerName, client_name: clientName, location: location, order_Dollar: orderDollar, order_LBP: orderLBP, delivery: delivery, delivery_currency: deliveryCurrency, final_amount_LBP: finalAmountInLBP, final_amount_Dollar: finalAmountInDollar, driver_tax: driverTax, driver_tax_Currency: driverTaxCurrency, remaining_amount_LBP: remainingAmountInLBP, remaining_amount_Dollar: remainingAmountInDollar, items: items, date: date, user: user}
 		const response = await axios.post('https://httpservercontrol.mostspecialdelivery.tech/api/orders/', data)
 		setOpen(false)
 		
-		setDealerName("")
-		setClientName("")
-		setLocation("")
-		setOrderPrice(0)
-		setOrderCurrency("")
-		setDelivery(0)
-		setDeliveryCurrency("")
-		setDriverTax(0)
-		setItems("")
-		setDate("")
-		setOrderId("")
 	}
 
 	const [query, setQuery] = React.useState('')
@@ -145,7 +134,7 @@ export default function Delivery({value, setValue, user}) {
 		setData([])
 		filteredOrders.map(order => {
 			setData(prevData => {
-				return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, Order_Price: order.order_price.toLocaleString(), isDollarOrder: order.order_currency === "dollar" ? true : false, DeliveryDollar: order.delivery_Dollar.toLocaleString(), DeliveryLBP: order.delivery_LBP.toLocaleString(), TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
+				return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
 			})
 		})
 	}
@@ -156,7 +145,7 @@ export default function Delivery({value, setValue, user}) {
 		setSecondData([])
 		filteredOrders.map(order => {
 			setSecondData(prevData => {
-				return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Driver_Tax: order.driver_tax, Remaining_Amount: order.remaining_amount_Dollar}]
+				return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Driver_Tax: order.driver_tax, Remaining_Amount_Dollar: order.remaining_amount_Dollar, Remaining_Amount_LBP: order.remaining_amount_LBP}]
 			})
 		})
 	}
@@ -209,11 +198,11 @@ export default function Delivery({value, setValue, user}) {
 				<MyTable setQuery={setQuery} setStatus={setStatus} status={status}>
 					{filteredOrders.toReversed().map((order) => {
 							if (status === 1){
-								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_price={order.order_price} order_currency={order.order_currency} delivery_LBP={order.delivery_LBP} delivery_Dollar={order.delivery_Dollar} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
+								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							} else if (status === 2 && order.status === 'Done') {
-								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_price={order.order_price} order_currency={order.order_currency} delivery_LBP={order.delivery_LBP} delivery_Dollar={order.delivery_Dollar} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
+								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							} else if (status === 3 && order.status === 'Pending') {
-								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_price={order.order_price} order_currency={order.order_currency} delivery_LBP={order.delivery_LBP} delivery_Dollar={order.delivery_Dollar} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
+								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							}
 							
 						}
@@ -339,37 +328,37 @@ export default function Delivery({value, setValue, user}) {
         		  	</div>
 
         		  	<div class="mb-3">
-        		    	<label class="form-label required">سعر الطلبية</label>
-        		    	<input type="number" class="form-control" autocomplete="off" onChange={e => setOrderPrice(e.target.value)}/>
+        		    	<label class="form-label required">الديليفيري</label>
+        		    	<input type="number" class="form-control" autocomplete="off" onChange={e => setDelivery(e.target.value)}/>
         		  	</div>
 
 					<div class="mb-3">
 						<div class="form-selectgroup">
 						<label class="form-selectgroup-item">
-							<input type="radio" name="ordercurrency" value="dollar" class="form-selectgroup-input" onClick={e => setOrderCurrency(e.target.value)}/>
+							<input type="radio" name="ordercurrency" value="dollar" class="form-selectgroup-input" onClick={e => setDeliveryCurrency(e.target.value)}/>
 							<span class="form-selectgroup-label">$</span>
 						</label>
 						<label class="form-selectgroup-item">
-							<input type="radio" name="ordercurrency" value="lebanese" class="form-selectgroup-input" onClick={e => setOrderCurrency(e.target.value)}/>
+							<input type="radio" name="ordercurrency" value="lebanese" class="form-selectgroup-input" onClick={e => setDeliveryCurrency(e.target.value)}/>
 							<span class="form-selectgroup-label">LBP</span>
 						</label>
 						</div>
 					</div>
 
         		  	<div class="mb-3">
-        		    	<label class="form-label required">الديليفيري</label>
+        		    	<label class="form-label required">سعر الطلبية</label>
 						<div style={{display: "flex"}}>
 							<div className="input-icon">
 								<span class="input-icon-addon" style={{fontSize: '16px'}}>
 									<FaDollarSign />
 								</span>
-								<input type="number"  class="form-control" autocomplete="off" onChange={e => setDeliveryDollar(e.target.value)}/>
+								<input type="number"  class="form-control" autocomplete="off" onChange={e => setOrderDollar(e.target.value)}/>
 							</div>
 							<div className="input-icon" style={{marginLeft: '1rem'}}>
 								<span class="input-icon-addon" style={{fontSize: '14px'}}>
 									LBP
 								</span>
-								<input type="number"  class="form-control" autocomplete="off" onChange={e => setDeliveryLBP(e.target.value)}/>
+								<input type="number"  class="form-control" autocomplete="off" onChange={e => setOrderLBP(e.target.value)}/>
 							</div>
 						</div>
         		  	</div>
