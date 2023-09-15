@@ -13,7 +13,7 @@ function loadFile(url, callback) {
 const ExportToWord = ({orders}) => {
 
   const generateDocument = () => {
-           loadFile("https://httpservercontrol.mostspecialdelivery.tech:4443/tableAndLoop2.docx", function (
+           loadFile("https://httpservercontrol.mostspecialdelivery.tech:4443/root/Files/tableAndLoop2.docx", function (
              error,
              content
            ) {
