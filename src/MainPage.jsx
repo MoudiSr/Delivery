@@ -43,6 +43,13 @@ const MainPage = ({value, setValue}) => {
 				setExpensesInLBP(prevExpenses => prevExpenses+employee.quantity)
 			}
     	})
+		orders.map((order) => {
+			if (order.driver_tax_Currency === 'dollar'){
+				setExpensesInDollar(prevExpenses => prevExpenses+order.driver_tax)
+			} else {
+				setExpensesInDollar(prevExpenses => prevExpenses+order.driver_tax)
+			}
+		})
     	setProfitInDollar(deliveryAmountInDollar-expensesInDollar)
 		setProfitInLBP(deliveryAmountInLBP-expensesInLBP)
 	}
