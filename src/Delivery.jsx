@@ -134,9 +134,7 @@ export default function Delivery({value, setValue, user}) {
 		)
 	)
 
-	const dateFilteredOrders = dateChanged === 0 ? 
-		filteredOrders :
-		filteredOrders.map(order => {
+	const dateFilteredOrders = filteredOrders.map(order => {
 			if (order.date >= dateRange[0] && order.date <= dateRange[1]){
 				return [...orders, order]
 			}
