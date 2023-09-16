@@ -39,11 +39,11 @@ export default function MyTable({children, setQuery, setStatus, status, startDat
 		</div>
 		
 		<div style={{display: 'flex', marginBottom: '1rem'}}>
-		/*
+		{/*
 			<DateRangePicker 
 				ranges={[selectionRange]}
 				onChange={handleSelect}
-			/>*/
+			/>*/}
 			<select className="form-select" style={{marginLeft: '.5rem', borderRadius: '1rem'}} onChange={e => setStatus(parseInt(e.target.value, 10))} value={status}>
 				<option value="1">All</option>
 				<option value="2">Done</option>
