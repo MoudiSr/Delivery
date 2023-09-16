@@ -9,16 +9,24 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import { DateRangePicker } from 'react-date-range';
 
 
 
 export default function MyTable({children, setQuery, setStatus, status, startDate, setStartDate, endDate, setEndDate}) {
 
-	const handleDateChange = (dates) => {
-		const [start, end] = dates;
-		setStartDate(start);
-		setEndDate(end);
-	};
+	const handleSelect = (date) => {
+		setStartDate(date.selection.startDate)
+		setEndDate(date.selection.endDate)
+	}
+
+	const selectionRange = {
+		startDate: startDate,
+		endDate: endDate,
+		key: "selection",
+	}
 
 	return (
 		<>
@@ -31,12 +39,9 @@ export default function MyTable({children, setQuery, setStatus, status, startDat
 		</div>
 		
 		<div style={{display: 'flex', marginBottom: '1rem'}}>
-			<DatePicker
-				selected={startDate}
-				onChange={handleDateChange}
-				startDate={startDate}
-				endDate={endDate}
-				selectsRange
+			<DateRangePicker 
+				ranges={[selectionRange]}
+				onChange={handleSelect}
 			/>
 			<select className="form-select" style={{marginLeft: '.5rem', borderRadius: '1rem'}} onChange={e => setStatus(parseInt(e.target.value, 10))} value={status}>
 				<option value="1">All</option>

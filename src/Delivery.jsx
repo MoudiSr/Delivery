@@ -86,8 +86,8 @@ export default function Delivery({value, setValue, user}) {
 	}
 
 	
-	const [startDate, setStartDate] = React.useState(null);
-  	const [endDate, setEndDate] = React.useState(null);
+	const [startDate, setStartDate] = React.useState(new Date());
+  	const [endDate, setEndDate] = React.useState(new Date());
 
 	const [query, setQuery] = React.useState('')
 
