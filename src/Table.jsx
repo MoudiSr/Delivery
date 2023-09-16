@@ -16,7 +16,7 @@ import { DateRangePicker } from 'react-date-range';
 
 
 export default function MyTable({children, setQuery, setStatus, status, startDate, setStartDate, endDate, setEndDate}) {
-
+/*
 	const handleSelect = (date) => {
 		setStartDate(date.selection.startDate)
 		setEndDate(date.selection.endDate)
@@ -26,7 +26,7 @@ export default function MyTable({children, setQuery, setStatus, status, startDat
 		startDate: startDate,
 		endDate: endDate,
 		key: "selection",
-	}
+	}*/
 
 	return (
 		<>
@@ -39,10 +39,11 @@ export default function MyTable({children, setQuery, setStatus, status, startDat
 		</div>
 		
 		<div style={{display: 'flex', marginBottom: '1rem'}}>
+		/*
 			<DateRangePicker 
 				ranges={[selectionRange]}
 				onChange={handleSelect}
-			/>
+			/>*/
 			<select className="form-select" style={{marginLeft: '.5rem', borderRadius: '1rem'}} onChange={e => setStatus(parseInt(e.target.value, 10))} value={status}>
 				<option value="1">All</option>
 				<option value="2">Done</option>

@@ -122,12 +122,14 @@ export default function Delivery({value, setValue, user}) {
 		orders.filter((order) => (
 			order.dealer_name.toLowerCase().includes(query) ||
 			order.client_name.toLowerCase().includes(query) ||
-			order.order_id.toString().includes(query)
+			order.order_id.toString().includes(query) ||
+			order.date.toString().includes(query)
 	)
 	) : specificOrders.filter((order) => (
 						order.dealer_name.toLowerCase().includes(query) ||
 						order.client_name.toLowerCase().includes(query) ||
-						order.order_id.toString().includes(query)
+						order.order_id.toString().includes(query) ||
+						order.date.toString().includes(query)
 		)
 	)
 
@@ -203,11 +205,11 @@ export default function Delivery({value, setValue, user}) {
 
 				<MyTable setQuery={setQuery} setStatus={setStatus} status={status} startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}>
 					{filteredOrders.map((order) => { 
-							if (status === 1 && order.date >= startDate && order.date <= endDate){
+							if (status === 1){
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
-							} else if (status === 2 && order.status === 'Done' && order.date >= startDate && order.date <= endDate) {
+							} else if (status === 2 && order.status === 'Done') {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
-							} else if (status === 3 && order.status === 'Pending' && order.date >= startDate && order.date <= endDate) {
+							} else if (status === 3 && order.status === 'Pending') {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							}
 							
