@@ -85,6 +85,13 @@ export default function Delivery({value, setValue, user}) {
 		
 	}
 
+	const [dateRange, setDateRange] = React.useState([
+		new Date(),
+		new Date()
+	])
+
+	const [dateChanged, setDateChanged] = React.useState(0)
+
 	const [query, setQuery] = React.useState('')
 
 
@@ -126,6 +133,14 @@ export default function Delivery({value, setValue, user}) {
 						order.order_id.toString().includes(query)
 		)
 	)
+
+	const dateFilteredOrders = dateChanged === 0 ? 
+		filteredOrders :
+		filteredOrders.map(order => {
+			if (order.date >= dateRange[0] && order.date <= dateRange[1]){
+				return [...orders, order]
+			}
+		})
 
 	
 	const [data, setData] = React.useState([])
@@ -195,8 +210,8 @@ export default function Delivery({value, setValue, user}) {
 					</div>
 				</NavBar>
 
-				<MyTable setQuery={setQuery} setStatus={setStatus} status={status}>
-					{filteredOrders.map((order) => { 
+				<MyTable setQuery={setQuery} setStatus={setStatus} status={status} dateRange={dateRange} setDateRange={setDateRange} setDateChanged={setDateChanged}>
+					{dateFilteredOrders.map((order) => { 
 							if (status === 1){
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							} else if (status === 2 && order.status === 'Done') {

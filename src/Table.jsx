@@ -7,22 +7,31 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import 'rsuite/dist/rsuite-no-reset.min.css'; 
+import { DateRangePicker } from 'rsuite';
 
-export default function MyTable({children, setQuery, setStatus, status}) {
+
+
+export default function MyTable({children, setQuery, setStatus, status, dateRange, setDateRange, setDateChanged}) {
 
 	return (
 		<>
+
 		<div class="wrapper">
 			<div class="icon">
-	        	<BsSearch style={{height: '1.5rem'}}/>
-	        </div>
-	        <input type="text" className="form-control input" style={{marginBottom: '1rem'}} placeholder="Search..." onChange={(e) => setQuery(e.target.value.toLowerCase())}/>
-	    </div>
-	    <select className="form-select mb-[1rem]" onChange={e => setStatus(parseInt(e.target.value, 10))} value={status}>
-			<option value="1">All</option>
-			<option value="2">Done</option>
-			<option value="3">Pending</option>
-		</select>
+				<BsSearch />
+			</div>
+			<input type="text" className="form-control input" style={{marginBottom: '1rem'}} placeholder="Search..." onChange={(e) => setQuery(e.target.value.toLowerCase())}/>
+		</div>
+		
+		<div style={{display: 'flex', marginBottom: '1rem'}}>
+			<DateRangePicker value={dateRange} onChange={setDateRange}/>
+			<select className="form-select" style={{marginLeft: '.5rem', borderRadius: '1rem'}} onChange={e => setStatus(parseInt(e.target.value, 10))} value={status}>
+				<option value="1">All</option>
+				<option value="2">Done</option>
+				<option value="3">Pending</option>
+			</select>
+		</div>
 	    <TableContainer component={Paper} style={{marginBottom: '10vh'}}>
           	<Table sx={{ minWidth: 650 }} aria-label="simple table">
             	<TableHead>
