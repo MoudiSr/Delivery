@@ -87,8 +87,8 @@ export default function Delivery({value, setValue, user}) {
 
 	
 	const [dateFilter, setDateFilter] = React.useState([
-		new Date(),
-		new Date()
+		null,
+		null
 	])
 
 	const [query, setQuery] = React.useState('')
