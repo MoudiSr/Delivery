@@ -132,18 +132,32 @@ export default function Delivery({value, setValue, user}) {
 		)
 	)
 
-	
+	const dateFilteredOrders = dateFilter !== null ? filteredOrders.filter((order) => {
+		let orderDate = new Date(order.date)
+		return (
+			orderDate >= dateRange[0] && orderDate <= dateRange[0]
+		)
+	}) : null
 
 	
 	const [data, setData] = React.useState([])
 
 	const kashefExcelData = () => {
 		setData([])
-		filteredOrders.map(order => {
-			setData(prevData => {
-				return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
+		if (dateFilteredOrders == null) {
+			filteredOrders.map(order => {
+				setData(prevData => {
+					return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
+				})
 			})
-		})
+		} else {
+			dateFilteredOrders.map(order => {
+				setData(prevData => {
+					return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
+				})
+			})
+		}
+		
 	}
 
 	const [secondData, setSecondData] = React.useState([])

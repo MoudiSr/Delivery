@@ -30,8 +30,8 @@ const ExportToWord = ({orders}) => {
              let totalLBP = 0
 
              orders.map(order => {
-                totalDollar += parseFloat(order.TotalInDollar.replaceAll(',', ''))
-                totalLBP += parseFloat(order.TotalInLBP.replaceAll(',', ''))
+                totalDollar += parseFloat(order.OrderDollar.replaceAll(',', ''))
+                totalLBP += parseFloat(order.OrderLBP.replaceAll(',', ''))
              })
              doc.setData({
               "currentDate": new Date().toLocaleDateString(),
