@@ -135,7 +135,7 @@ export default function Delivery({value, setValue, user}) {
 	const dateFilteredOrders = dateFilter !== null ? filteredOrders.filter((order) => {
 		let orderDate = new Date(order.date)
 		return (
-			orderDate >= dateRange[0] && orderDate <= dateRange[0]
+			orderDate >= dateFilter[0] && orderDate <= dateFilter[0]
 		)
 	}) : null
 
