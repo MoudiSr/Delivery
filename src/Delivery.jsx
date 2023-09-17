@@ -99,12 +99,23 @@ export default function Delivery({value, setValue, user}) {
 		
 		setSpecificOrders([])
 		orders.map((order) => {
-			if (status === 1){
-				setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
-			} else if (status === 2 && order.status === 'Done') {
-				setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
-			} else if (status === 3 && order.status === 'Pending') {
-				setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+			let orderDate = new Date(order.date)
+			if (dateFilter == null) {
+				if (status === 1){
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 2 && order.status === 'Done') {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 3 && order.status === 'Pending') {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				}
+			} else {
+				if (status === 1 && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 2 && order.status === 'Done' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 3 && order.status === 'Pending' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				}
 			}
 		})
 
@@ -115,7 +126,7 @@ export default function Delivery({value, setValue, user}) {
 
 	React.useEffect(() => {
 		fetchSpecificOrders()
-	}, [status])
+	}, [status, dateFilter])
 
 	const filteredOrders = specificOrders.length === 0 ? 
 		orders.filter((order) => (
@@ -132,32 +143,18 @@ export default function Delivery({value, setValue, user}) {
 		)
 	)
 
-	const dateFilteredOrders = dateFilter !== null ? filteredOrders.filter((order) => {
-		let orderDate = new Date(order.date)
-		return (
-			orderDate >= dateFilter[0] && orderDate <= dateFilter[0]
-		)
-	}) : null
+	
 
 	
 	const [data, setData] = React.useState([])
 
 	const kashefExcelData = () => {
 		setData([])
-		if (dateFilteredOrders == null) {
-			filteredOrders.map(order => {
-				setData(prevData => {
-					return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
-				})
+		filteredOrders.map(order => {
+			setData(prevData => {
+				return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
 			})
-		} else {
-			dateFilteredOrders.map(order => {
-				setData(prevData => {
-					return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
-				})
-			})
-		}
-		
+		})
 	}
 
 	const [secondData, setSecondData] = React.useState([])
