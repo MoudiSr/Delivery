@@ -99,15 +99,16 @@ const ExportToWord = ({orders, filteredOrders}) => {
                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
              }); //Output the document using Data-URI
              saveAs(out, "output.docx");
-           }).then(
-            filteredOrders.map(order => {
-              orders.map(d => {
-                if (d.ID === order.order_id){
-                  handleStatus(order)
-                }
+           }).then(() => {
+              console.log("success")
+              filteredOrders.map(order => {
+                orders.map(d => {
+                  if (d.ID === order.order_id){
+                    handleStatus(order)
+                  }
+                })
               })
             })
-           )
          };
 
   return (
