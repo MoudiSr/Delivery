@@ -86,8 +86,10 @@ export default function Delivery({value, setValue, user}) {
 	}
 
 	
-	const [startDate, setStartDate] = React.useState(new Date());
-  	const [endDate, setEndDate] = React.useState(new Date());
+	const [dateFilter, setDateFilter] = React.useState([
+		new Date(),
+		new Date()
+	])
 
 	const [query, setQuery] = React.useState('')
 
@@ -180,27 +182,7 @@ export default function Delivery({value, setValue, user}) {
 		}
 	}
 
-	const [dateBasedFilteredOrders, setDateBasedFilteredOrders] = React.useState(null)
-
-	const handleSelect = (date) => {
-		let dateBasedFilter = filteredOrders.filter((order) => {
-			let orderDate = new Date(order.date)
-			return (
-				orderDate >= date.selection.startDate &&
-				orderDate <= date.selection.endDate
-			)
-		})
-		setDateBasedFilteredOrders(dateBasedFilter)
-		setStartDate(date.selection.startDate)
-		setEndDate(date.selection.endDate)
-	}
-
-	const selectionRange = {
-		startDate: startDate,
-		endDate: endDate,
-		key: "selection",
-	}
-
+	
 	return (
 		<OrdersContext.Provider value={{ setOrders, fetchOrders }}>
 			<MainNav />
@@ -224,28 +206,19 @@ export default function Delivery({value, setValue, user}) {
 					</div>
 				</NavBar>
 
-				<MyTable setQuery={setQuery} setStatus={setStatus} status={status} handleSelect={handleSelect} selectionRange={selectionRange}>
-					{dateBasedFilteredOrders === null ? filteredOrders.map((order) => { 
-							if (status === 1){
+				<MyTable setQuery={setQuery} setStatus={setStatus} status={status} setDateFilter={setDateFilter} dateFilter={dateFilter}>
+					{filteredOrders.map((order) => { 
+							let orderDate = new Date(order.date)
+							if (status === 1 && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
-							} else if (status === 2 && order.status === 'Done') {
+							} else if (status === 2 && order.status === 'Done' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
-							} else if (status === 3 && order.status === 'Pending') {
+							} else if (status === 3 && order.status === 'Pending' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							}
 							
 						}
-					) : dateBasedFilteredOrders.map((order) => { 
-						if (status === 1){
-							return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
-						} else if (status === 2 && order.status === 'Done') {
-							return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
-						} else if (status === 3 && order.status === 'Pending') {
-							return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
-						}
-						
-					}
-				)
+					)
 					}		
 				</MyTable>
 			</div>

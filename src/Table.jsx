@@ -7,13 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
-import { DateRangePicker } from 'react-date-range';
+import DateRangePicker from 'rsuite/DateRangePicker';
+import "rsuite/dist/rsuite-no-reset.min.css"; 
 
 
-
-export default function MyTable({children, setQuery, setStatus, status, selectionRange, handleSelect}) {
+export default function MyTable({children, setQuery, setStatus, status, setDateFilter, dateFilter}) {
 
 	return (
 		<>
@@ -26,11 +24,7 @@ export default function MyTable({children, setQuery, setStatus, status, selectio
 		</div>
 		
 		<div style={{display: 'flex', marginBottom: '1rem'}}>
-		
-			<DateRangePicker 
-				ranges={[selectionRange]}
-				onChange={handleSelect}
-			/>
+			<DateRangePicker value={dateFilter} onChange={setDateFilter} />
 			<select className="form-select" style={{marginLeft: '.5rem', borderRadius: '1rem'}} onChange={e => setStatus(parseInt(e.target.value, 10))} value={status}>
 				<option value="1">All</option>
 				<option value="2">Done</option>
