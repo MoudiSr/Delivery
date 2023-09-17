@@ -102,7 +102,7 @@ const ExportToWord = ({orders, filteredOrders}) => {
            }).then(() => {
               console.log("success")
               filteredOrders.map(order => {
-                orders.map(d => {
+                orders.map(d => { 
                   if (d.ID === order.order_id){
                     handleStatus(order)
                   }
