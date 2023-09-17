@@ -184,9 +184,10 @@ export default function Delivery({value, setValue, user}) {
 
 	const handleSelect = (date) => {
 		let dateBasedFilter = filteredOrders.filter((order) => {
+			let orderDate = new Date(order.date)
 			return (
-				order.date >= date.selection.startDate &&
-				order.date <= date.selection.endDate
+				orderDate >= date.selection.startDate &&
+				orderDate <= date.selection.endDate
 			)
 		})
 		setDateBasedFilteredOrders(dateBasedFilter)
