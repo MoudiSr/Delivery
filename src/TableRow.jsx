@@ -75,7 +75,7 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 			<TableCell align="center" style={{ fontWeight: '700', whiteSpace: 'nowrap', fontFamily: "'Rubik', sans-serif" }}>{date}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{user}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>
-				<span className={status === 'Pending' ? "status status-yellow" : "status status-green"}>
+				<span className={status === 'Pending' ? "status status-yellow" : status === 'Done' ? "status status-green" : "status status-azure"}>
 				  <span className={status === 'Pending' ? "status-dot status-dot-animated" : "status-dot"}></span>
 				  {status}
 				</span>

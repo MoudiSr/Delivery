@@ -29,6 +29,7 @@ export default function MyTable({children, setQuery, setStatus, status, setDateF
 				<option value="1">All</option>
 				<option value="2">Done</option>
 				<option value="3">Pending</option>
+				<option value="4">Archived</option>
 			</select>
 		</div>
 	    <TableContainer component={Paper} style={{marginBottom: '10vh'}}>

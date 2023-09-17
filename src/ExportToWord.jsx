@@ -5,12 +5,37 @@ import { saveAs } from 'file-saver';
 import PizZipUtils from "pizzip/utils/index.js"
 import Button from '@mui/material/Button'
 import {BsFiletypeDocx} from "react-icons/bs"
+import axios from "axios"
 
 function loadFile(url, callback) {
     PizZipUtils.getBinaryContent(url, callback);
 }
 
-const ExportToWord = ({orders}) => {
+const ExportToWord = ({orders, filteredOrders}) => {
+  const handleStatus = async (e, order) => {
+		e.preventDefault()
+		await axios.put(`https://httpservercontrol.mostspecialdelivery.tech/api/orders/${id}/`, {
+			id: order.id, 
+			order_id: order.order_id, 
+			dealer_name: order.dealer_name, 
+			client_name: order.client_name, 
+			location: order.location, 
+			order_Dollar: order.order_Dollar, 
+			order_LBP: order.order_LBP, 
+			delivery: order.delivery, 
+			delivery_currency: order.delivery_currency, 
+			final_amount_LBP: order.final_amount_LBP,
+			final_amount_Dollar: order.final_amount_Dollar, 
+			driver_tax: order.driver_tax,
+			driver_tax_Currency: order.driver_tax_Currency,
+			remaining_amount_LBP: order.remaining_amount_LBP,
+			remaining_amount_Dollar: order.remaining_amount_Dollar, 
+			items: order.items, 
+			date: order.date, 
+			user: order.user,
+			status: "Archived",
+		})
+	}
 
   const generateDocument = () => {
            loadFile("https://httpservercontrol.mostspecialdelivery.tech:4443/root/Files/tableAndLoop2.docx", function (
@@ -74,7 +99,15 @@ const ExportToWord = ({orders}) => {
                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
              }); //Output the document using Data-URI
              saveAs(out, "output.docx");
-           });
+           }).then(
+            filteredOrders.map(order => {
+              orders.map(d => {
+                if (d.ID === order.order_id){
+                  handleStatus(order)
+                }
+              })
+            })
+           )
          };
 
   return (
