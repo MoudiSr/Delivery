@@ -15,8 +15,7 @@ const ExportToWord = ({orders, filteredOrders}) => {
 
   const [currentOrder, setCurrentOrder] = React.useState({})
 
-  const handleStatus = async (e) => {
-		e.preventDefault()
+  const handleStatus = async () => {
 		await axios.put(`https://httpservercontrol.mostspecialdelivery.tech/api/orders/${id}/`, {
 			id: currentOrder.id, 
       order_id: currentOrder.order_id, 
