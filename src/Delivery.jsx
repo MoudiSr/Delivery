@@ -39,8 +39,8 @@ export default function Delivery({value, setValue, user}) {
 	const [driverTax, setDriverTax] = React.useState(0)
 	const [driverTaxCurrency, setDriverTaxCurrency] = React.useState('')
 	const [items, setItems] = React.useState("")
-	const [date, setDate] = React.useState("")
-	const [orderId, setOrderId] = React.useState("")
+	const [date, setDate] = React.useState(new Date())
+	const [orderId, setOrderId] = React.useState(0)
 
 
 	const handleClickOpen = () => {
@@ -82,7 +82,20 @@ export default function Delivery({value, setValue, user}) {
 		const data = {order_id: orderId, dealer_name: dealerName, client_name: clientName, location: location, order_Dollar: orderDollar, order_LBP: orderLBP, delivery: delivery, delivery_currency: deliveryCurrency, final_amount_LBP: finalAmountInLBP, final_amount_Dollar: finalAmountInDollar, driver_tax: driverTax, driver_tax_Currency: driverTaxCurrency, remaining_amount_LBP: remainingAmountInLBP, remaining_amount_Dollar: remainingAmountInDollar, items: items, date: date, user: user}
 		const response = await axios.post('https://httpservercontrol.mostspecialdelivery.tech/api/orders/', data)
 		setOpen(false)
+
 		
+		setDealerName("")
+		setClientName("")
+		setLocation("")
+		setOrderDollar(0)
+		setOrderLBP(0)
+		setDelivery(0)
+		setDeliveryCurrency("dollar")
+		setDriverTax(0)
+		setDriverTaxCurrency("dollar")
+		setItems("")
+		setDate(new Date())
+		setOrderId(0)
 	}
 
 	
