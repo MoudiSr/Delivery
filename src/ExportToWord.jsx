@@ -13,28 +13,26 @@ function loadFile(url, callback) {
 
 const ExportToWord = ({orders, filteredOrders}) => {
 
-  const [currentOrder, setCurrentOrder] = React.useState({})
-
-  const handleStatus = () => {
-		 axios.put(`https://httpservercontrol.mostspecialdelivery.tech/api/orders/${currentOrder.id}/`, {
-			id: currentOrder.id, 
-      order_id: currentOrder.order_id, 
-			dealer_name: currentOrder.dealer_name, 
-			client_name: currentOrder.client_name, 
-			location: currentOrder.location, 
-			order_Dollar: currentOrder.order_Dollar, 
-			order_LBP: currentOrder.order_LBP, 
-			delivery: currentOrder.delivery, 
-			delivery_currency: currentOrder.delivery_currency, 
-			final_amount_LBP: currentOrder.final_amount_LBP,
-			final_amount_Dollar: currentOrder.final_amount_Dollar, 
-			driver_tax: currentOrder.driver_tax,
-			driver_tax_Currency: currentOrder.driver_tax_Currency,
-			remaining_amount_LBP: currentOrder.remaining_amount_LBP,
-			remaining_amount_Dollar: currentOrder.remaining_amount_Dollar, 
-			items: currentOrder.items, 
-			date: currentOrder.date, 
-			user: currentOrder.user,
+  const handleStatus = async (order) => {
+		 await axios.put(`https://httpservercontrol.mostspecialdelivery.tech/api/orders/${order.id}/`, {
+			id: order.id, 
+      order_id: order.order_id, 
+			dealer_name: order.dealer_name, 
+			client_name: order.client_name, 
+			location: order.location, 
+			order_Dollar: order.order_Dollar, 
+			order_LBP: order.order_LBP, 
+			delivery: order.delivery, 
+			delivery_currencyr: order.delivery_currency, 
+			final_amount_LBP: order.final_amount_LBP,
+			final_amount_Dollar: order.final_amount_Dollar, 
+			driver_tax: order.driver_tax,
+			driver_tax_Currency: order.driver_tax_Currency,
+			remaining_amount_LBP: order.remaining_amount_LBP,
+			remaining_amount_Dollar: order.remaining_amount_Dollar, 
+			items: order.items, 
+			date: order.date, 
+			user: order.user,
 			status: "Archived",
 		})
 	}
@@ -104,15 +102,13 @@ const ExportToWord = ({orders, filteredOrders}) => {
              filteredOrders.map(order => {
               orders.map(d => { 
                 if (d.ID === order.order_id){
-                  setCurrentOrder(order)
+                  handleStatus(order)
                 }
               })
             })
            })
          };
-  React.useEffect(() => {
-    handleStatus()
-  }, [currentOrder])
+  
 
   return (
     <Button onClick={generateDocument} variant="contained" style={{marginRight: "2rem", backgroundColor: "#3e8c4b", fontFamily: "'Rubik', sans-serif"}} startIcon={<BsFiletypeDocx />}>{"كشف حساب"}</Button>
