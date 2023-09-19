@@ -44,12 +44,36 @@ export default function Delivery({value, setValue, user}) {
 
 
 	const handleClickOpen = () => {
+		setDealerName("")
+		setClientName("")
+		setLocation("")
+		setOrderDollar(0)
+		setOrderLBP(0)
+		setDelivery(0)
+		setDeliveryCurrency("dollar")
+		setDriverTax(0)
+		setDriverTaxCurrency("dollar")
+		setItems("")
+		setDate(new Date())
+		setOrderId(0)
 	    setOpen(true)
 	}
 
 	  const handleClose = () => {
 	    setOpen(false)
 		setInputVisible(false)
+		setDealerName("")
+		setClientName("")
+		setLocation("")
+		setOrderDollar(0)
+		setOrderLBP(0)
+		setDelivery(0)
+		setDeliveryCurrency("dollar")
+		setDriverTax(0)
+		setDriverTaxCurrency("dollar")
+		setItems("")
+		setDate(new Date())
+		setOrderId(0)
 	}
 
 	const fetchOrders = async () => {
