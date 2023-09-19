@@ -138,22 +138,27 @@ export default function Delivery({value, setValue, user}) {
 		orders.map((order) => {
 			let orderDate = new Date(order.date)
 			if (dateFilter == null) {
-				if (status === 1){
+				if (status === 1 && (order.status === 'Done' || order.status === 'Pending')){
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				} else if (status === 2 && order.status === 'Done') {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				} else if (status === 3 && order.status === 'Pending') {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 4 && order.status === 'Archived') {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				}
 			} else {
-				if (status === 1 && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
+				if (status === 1 && (order.status === 'Done' || order.status === 'Pending') && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				} else if (status === 2 && order.status === 'Done' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				} else if (status === 3 && order.status === 'Pending' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 4 && order.status === 'Archived' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				}
 			}
+			
 		})
 
 		if (specificOrders.length == 0) {
