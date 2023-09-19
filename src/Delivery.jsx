@@ -265,7 +265,7 @@ export default function Delivery({value, setValue, user}) {
 				  	<div class="mb-3">
         		    	<label class="form-label required">رقم الإيصال</label>
         		    	<input type="number" class="form-control" autocomplete="off" onChange={e => setOrderId(e.target.value)}/>
-        		  	</div>
+        		  	</div> 
 	        		<div class="mb-3">
         		    	<label class="form-label required">اسم التاجر</label>
         		    	<input type="text" class="form-control" autocomplete="off" onChange={e => setDealerName(e.target.value)}/>
