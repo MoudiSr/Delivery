@@ -34,7 +34,7 @@ const ExportToWord = ({orders, filteredOrders}) => {
 			date: order.date, 
 			user: order.user,
 			status: "Archived",
-		})
+		}) 
 	}
 
   const generateDocument = () => {
