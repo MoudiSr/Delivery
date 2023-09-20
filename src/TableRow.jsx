@@ -35,6 +35,31 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 	const [dateState, setDate] = React.useState(date)
 	const [orderId, setOrderId] = React.useState(order_id)
 
+	const handleClose = () => {
+	    setEditOpen(false)
+		setInputVisible(false)
+		setDealerName("")
+		setClientName("")
+		setLocation("")
+		setOrderDollar(0)
+		setOrderLBP(0)
+		setDelivery(0)
+		setDeliveryCurrency("dollar")
+		setDriverTax(0)
+		setDriverTaxCurrency("dollar")
+		setItems("")
+		setDate(new Date())
+		setOrderId(0)
+	}
+
+	const [inputVisible, setInputVisible] = React.useState(false)
+	
+	const [addedAreas, setAddedAreas] = React.useState([])
+
+	const handleVisible = () => {
+		setInputVisible(prevVisible => !prevVisible)
+	}
+
 	const handleDelete = async (e) => {
 		e.preventDefault()
 		setOpen(false)
@@ -68,12 +93,55 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 		})
 		fetchOrders()
 	}
+	
+	const editOrder = async (e) => {
+		e.preventDefault()
+
+		let finalAmountInDollar = deliveryCurrency === 'dollar' ? parseFloat(deliveryState) : 0
+		finalAmountInDollar += parseFloat(orderDollar)
+
+		let finalAmountInLBP = deliveryCurrency !== 'dollar' ? parseFloat(deliveryState) : 0
+		finalAmountInLBP += parseFloat(orderLBP)
+
+		let remainingAmountInDollar = deliveryCurrency === 'dollar' ? parseFloat(deliveryState) : 0
+		remainingAmountInDollar -= driverTaxCurrency === 'dollar' ? parseFloat(driverTax) : 0
+
+		let remainingAmountInLBP = deliveryCurrency !== 'dollar' ? parseFloat(deliveryState) : 0
+		remainingAmountInLBP -= driverTaxCurrency !== 'dollar' ? parseFloat(driverTax) : 0
+
+
+		setEditOpen(false)
+		await axios.put(`https://httpservercontrol.mostspecialdelivery.tech/api/orders/${id}/`, {
+			id, 
+			order_id: orderId, 
+			dealer_name: dealerName, 
+			client_name: clientName, 
+			location: locationState, 
+			order_Dollar: orderDollar, 
+			order_LBP: orderLBP, 
+			delivery: deliveryState, 
+			delivery_currency: deliveryCurrency, 
+			final_amount_LBP: finalAmountInLBP,
+			final_amount_Dollar: finalAmountInDollar, 
+			driver_tax: driverTax,
+			driver_tax_Currency: driverTaxCurrency,
+			remaining_amount_LBP: remainingAmountInLBP,
+			remaining_amount_Dollar: remainingAmountInDollar, 
+			items: itemsState, 
+			date: dateState, 
+			user,
+			status,	
+		})
+		fetchOrders()
+	}
 
 	const [open, setOpen] = React.useState(false)
 
 	const [open1, setOpen1] = React.useState(false)
 
 	const [editOpen, setEditOpen] = React.useState(false)
+	const type = "edit"
+
 
 	return (
 		<>
@@ -149,6 +217,29 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 	          </Button>
 	        </DialogActions>
 	      </Dialog>
+
+		  <OrderModal open={editOpen} 
+				handleClose={handleClose} 
+				addOrder={editOrder} 
+				addedAreas={addedAreas}
+				setAddedAreas={setAddedAreas}
+				inputVisible={inputVisible} 
+				setOrderId={setOrderId} 
+				setDealerName={setDealerName}
+				setClientName={setClientName}
+				setLocation={setLocation}
+				setOrderDollar={setOrderDollar}
+				setOrderLBP={setOrderLBP}
+				setDelivery={setDelivery}
+				setDeliveryCurrency={setDeliveryCurrency}
+				setDriverTax={setDriverTax}
+				setDriverTaxCurrency={setDriverTaxCurrency}
+				setItems={setItems}
+				setDate={setDate}
+				handleVisible={handleVisible}
+				user={user}
+				type={type}
+			/>
 
 		</>
 	)

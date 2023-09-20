@@ -81,6 +81,8 @@ export default function Delivery({value, setValue, user}) {
 		fetchOrders()
 	}, [open])
 
+	const type = "add"
+
 	const addOrder = async (e) => {
 		e.preventDefault()
 
@@ -280,20 +282,11 @@ export default function Delivery({value, setValue, user}) {
 	}, [filteredOrders])
 
 	const [inputVisible, setInputVisible] = React.useState(false)
-	const [inputText, setInputText] = React.useState("")
+	
 	const [addedAreas, setAddedAreas] = React.useState([])
 
 	const handleVisible = () => {
 		setInputVisible(prevVisible => !prevVisible)
-	}
-
-	const addArea = () => {
-		if (inputText.length > 0){
-			setAddedAreas(prevData => [...prevData, inputText])
-			document.getElementById("addAreaInput").value = ""
-			setInputText("")
-			handleVisible()
-		}
 	}
 
 	
@@ -354,8 +347,8 @@ export default function Delivery({value, setValue, user}) {
 			<OrderModal open={open} 
 				handleClose={handleClose} 
 				addOrder={addOrder} 
-				addedAreas={addedAreas} 
-				addArea={addArea} 
+				addedAreas={addedAreas}
+				setAddedAreas={setAddedAreas}
 				inputVisible={inputVisible} 
 				setOrderId={setOrderId} 
 				setDealerName={setDealerName}
@@ -371,6 +364,7 @@ export default function Delivery({value, setValue, user}) {
 				setDate={setDate}
 				handleVisible={handleVisible}
 				user={user}
+				type={type}
 			/>
 			
 			{isMobile && 

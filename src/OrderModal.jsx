@@ -9,7 +9,7 @@ import {FaDollarSign} from "react-icons/fa"
 import Button from '@mui/material/Button'
 
 
-export default function OrderModal({open, handleClose, addOrder, addedAreas, addArea, inputVisible, 
+export default function OrderModal({open, handleClose, addOrder, addedAreas, setAddedAreas, inputVisible, 
     setDealerName,
     setClientName,
     setLocation,
@@ -22,25 +22,50 @@ export default function OrderModal({open, handleClose, addOrder, addedAreas, add
     setItems,
     setDate,
     setOrderId,
+    dealerName,
+    clientName,
+    location,
+    orderDollar,
+    orderLBP,
+    delivery,
+    deliveryCurrency,
+    driverTax,
+    driverTaxCurrency,
+    items,
+    date,
+    orderId,
     handleVisible,
-    user
+    user,
+    type
   }) {
+    
+    const [inputText, setInputText] = React.useState("")
+    
+    const addArea = () => {
+      if (inputText.length > 0){
+        setAddedAreas(prevData => [...prevData, inputText])
+        document.getElementById("addAreaInput").value = ""
+        setInputText("")
+        handleVisible()
+      }
+    }
+
     return (
         <Dialog open={open} onClose={handleClose}>
-        <DialogTitle style={{fontFamily: "'Rubik', sans-serif"}}>Add Order</DialogTitle>
+        <DialogTitle style={{fontFamily: "'Rubik', sans-serif"}}>{type == "add" ? "Add" : "Edit"} Order</DialogTitle>
         <DialogContent>
           <fieldset class="form-fieldset" style={{textAlign: 'left'}}>
               <div class="mb-3">
                 <label class="form-label required">رقم الإيصال</label>
-                <input type="number" class="form-control" autocomplete="off" onChange={e => setOrderId(e.target.value)}/>
+                <input type="number" class="form-control" autocomplete="off" value={orderId} onChange={e => setOrderId(e.target.value)}/>
               </div> 
             <div class="mb-3">
                 <label class="form-label required">اسم التاجر</label>
-                <input type="text" class="form-control" autocomplete="off" onChange={e => setDealerName(e.target.value)}/>
+                <input type="text" class="form-control" autocomplete="off" value={dealerName} onChange={e => setDealerName(e.target.value)}/>
               </div>
               <div class="mb-3">
                 <label class="form-label required">اسم الزبون</label>
-                <input type="text" class="form-control" autocomplete="off" onChange={e => setClientName(e.target.value)}/>
+                <input type="text" class="form-control" autocomplete="off" value={clientName} onChange={e => setClientName(e.target.value)}/>
               </div>
 
               <div class="mb-3">
@@ -210,7 +235,7 @@ export default function OrderModal({open, handleClose, addOrder, addedAreas, add
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} style={{fontFamily: "'Rubik', sans-serif"}}>Cancel</Button>
-          <Button onClick={addOrder} style={{fontFamily: "'Rubik', sans-serif"}}>Add</Button>
+          <Button onClick={addOrder} style={{fontFamily: "'Rubik', sans-serif"}}>{type == "add" ? "Add" : "Edit"}</Button>
         </DialogActions>
     </Dialog>
     )
