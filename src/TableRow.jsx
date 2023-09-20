@@ -11,6 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import OrderModal from "./OrderModal"
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -20,6 +21,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function MyTableRow({id, order_id, dealer_name, client_name, location, order_Dollar, order_LBP, delivery, delivery_currency, final_amount_LBP, final_amount_Dollar, driver_tax, driver_tax_Currency, remaining_amount_LBP, remaining_amount_Dollar, items, date, user, status}) {
 	
 	const { setOrders, fetchOrders } = React.useContext(OrdersContext)
+
+	const [dealerName, setDealerName] = React.useState(dealer_name)
+	const [clientName, setClientName] = React.useState(client_name)
+	const [locationState, setLocation] = React.useState(location)
+	const [orderDollar, setOrderDollar] = React.useState(order_Dollar)
+	const [orderLBP, setOrderLBP] = React.useState(order_LBP)
+	const [deliveryState, setDelivery] = React.useState(delivery)
+	const [deliveryCurrency, setDeliveryCurrency] = React.useState(delivery_currency)
+	const [driverTax, setDriverTax] = React.useState(driver_tax)
+	const [driverTaxCurrency, setDriverTaxCurrency] = React.useState(driver_tax_Currency)
+	const [itemsState, setItems] = React.useState(items)
+	const [dateState, setDate] = React.useState(date)
+	const [orderId, setOrderId] = React.useState(order_id)
 
 	const handleDelete = async (e) => {
 		e.preventDefault()
@@ -59,6 +73,8 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 
 	const [open1, setOpen1] = React.useState(false)
 
+	const [editOpen, setEditOpen] = React.useState(false)
+
 	return (
 		<>
 		<TableRow>
@@ -86,6 +102,9 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 					<div class="dropdown-menu">
 						<label class="dropdown-item">
 							{status === "Pending" && <button className="btn btn-success"  style={{ width: '100%'}} onClick={() => setOpen1(true)}>Finish</button>}
+						</label>
+						<label class="dropdown-item">
+							<button className="btn btn-primary" onClick={() => setEditOpen(true)} style={{ width: '100%'}}>Edit</button>
 						</label>
 						<label class="dropdown-item">
 							<button className="btn btn-danger" onClick={() => setOpen(true)} style={{ width: '100%'}}>Delete</button>
@@ -130,6 +149,7 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 	          </Button>
 	        </DialogActions>
 	      </Dialog>
+
 		</>
 	)
 }

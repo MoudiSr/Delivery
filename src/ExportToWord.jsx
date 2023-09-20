@@ -97,7 +97,7 @@ const ExportToWord = ({orders, filteredOrders}) => {
                type: "blob",
                mimeType:
                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-             }); //Output the document using Data-URI
+             });
              saveAs(out, "output.docx");
              filteredOrders.map(order => {
               orders.map(d => { 
