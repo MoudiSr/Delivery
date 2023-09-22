@@ -36,7 +36,9 @@ export default function OrderModal({open, handleClose, addOrder, addedAreas, set
     orderId,
     handleVisible,
     user,
-    type
+    type,
+    setStatus,
+    status
   }) {
     
     const [inputText, setInputText] = React.useState("")
@@ -225,7 +227,17 @@ export default function OrderModal({open, handleClose, addOrder, addedAreas, set
                 <label class="form-label required">التاريخ</label>
                 <input type="date" class="form-control" autocomplete="off" onChange={e => setDate(e.target.value)}/>
               </div>
-
+              {type == "edit" && 
+              <div className="mb-3">
+                <label class="form-label required">Status</label>
+                <select className="form-select" style={{borderRadius: '1rem'}} onChange={e => setStatus(e.target.value)} value={status}>
+                  <option value="Done">Done</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Archived">Archived</option>
+                  <option value="Void">Void</option>
+                </select>
+              </div>
+              }
               <div class="mb-3">
                 <label class="form-label required">المستخدم</label>
                 <label class="">{user}</label>

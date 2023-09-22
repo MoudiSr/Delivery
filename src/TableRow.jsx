@@ -34,6 +34,7 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 	const [itemsState, setItems] = React.useState(items)
 	const [dateState, setDate] = React.useState(date)
 	const [orderId, setOrderId] = React.useState(order_id)
+	const [statusState, setStatus] = React.useState(status)
 
 	const handleClose = () => {
 	    setEditOpen(false)
@@ -130,7 +131,7 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 			items: itemsState, 
 			date: dateState, 
 			user,
-			status,	
+			status: statusState,	
 		})
 		fetchOrders()
 	}
@@ -159,7 +160,7 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 			<TableCell align="center" style={{ fontWeight: '700', whiteSpace: 'nowrap', fontFamily: "'Rubik', sans-serif" }}>{date}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>{user}</TableCell>
 			<TableCell align="center" style={{ fontWeight: '700', fontFamily: "'Rubik', sans-serif" }}>
-				<span className={status === 'Pending' ? "status status-yellow" : status === 'Done' ? "status status-green" : "status status-azure"}>
+				<span className={status === 'Pending' ? "status status-yellow" : status === 'Done' ? "status status-green" : status === 'Archived' ? "status status-azure" : "status status-red"}>
 				  <span className={status === 'Pending' ? "status-dot status-dot-animated" : "status-dot"}></span>
 				  {status}
 				</span>
@@ -239,6 +240,8 @@ export default function MyTableRow({id, order_id, dealer_name, client_name, loca
 				handleVisible={handleVisible}
 				user={user}
 				type={type}
+				setStatus={setStatus}
+				status={statusState}
 			/>
 
 		</>

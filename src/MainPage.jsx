@@ -12,6 +12,7 @@ const MainPage = ({value, setValue}) => {
 	const [expensesInLBP, setExpensesInLBP] = React.useState(0)
 	const [profitInDollar, setProfitInDollar] = React.useState(0)
 	const [profitInLBP, setProfitInLBP] = React.useState(0)
+	const [expenses, setExpenses] = React.useState([])
 
 	const fetchOrders = async () => {
 	    
@@ -34,6 +35,10 @@ const MainPage = ({value, setValue}) => {
 		const jsonData = await response.json()
 	    setEmployees(jsonData)
 
+		const response1 = await fetch("https://httpservercontrol.mostspecialdelivery.tech/api/expenses/?format=json")
+		const jsonData1 = await response1.json()
+	    setExpenses(jsonData1)
+
         setExpensesInDollar(0)
 		setExpensesInLBP(0)
         employees.map((employee) => {
@@ -42,7 +47,13 @@ const MainPage = ({value, setValue}) => {
 			} else {
 				setExpensesInLBP(prevExpenses => prevExpenses+employee.quantity)
 			}
-    	})
+    	}) 
+
+		expenses.map((exp) => {
+			setExpensesInDollar(prevExpenses => prevExpenses+exp.amount_dollar)
+			setExpensesInLBP(prevExpenses => prevExpenses+exp.amount_lbp)
+		})
+
 		orders.map((order) => {
 			if (order.driver_tax_Currency === 'dollar'){
 				setExpensesInDollar(prevExpenses => prevExpenses+order.driver_tax)

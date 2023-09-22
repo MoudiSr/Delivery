@@ -5,6 +5,8 @@ import LoginPage from "./LoginPage"
 import NoPage from "./NoPage"
 import EmployeesPage from "./EmployeesPage"
 import MainPage from "./MainPage"
+import ExpensesPage from "./Expenses.jsx"
+
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false)
@@ -19,6 +21,7 @@ export default function App() {
           {user && <Route path="/orders" element={<Delivery user={user} value={value} setValue={setValue}/>} />}
           {user && <Route path="/employees" element={<EmployeesPage user={user} value={value} setValue={setValue}/>} />}
           {user && <Route path="/dashboard" element={<MainPage value={value} setValue={setValue}/>} />}
+          {user && <Route path="/expenses" element={<ExpensesPage user={user} value={value} setValue={setValue}/>} />}
           <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

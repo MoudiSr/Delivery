@@ -142,6 +142,8 @@ export default function Delivery({value, setValue, user}) {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				} else if (status === 4 && order.status === 'Archived') {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 5 && order.status === 'Void') {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				}
 			} else {
 				if (status === 1 && (order.status === 'Done' || order.status === 'Pending') && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
@@ -151,6 +153,8 @@ export default function Delivery({value, setValue, user}) {
 				} else if (status === 3 && order.status === 'Pending' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				} else if (status === 4 && order.status === 'Archived' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
+					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
+				} else if (status === 5 && order.status === 'Void' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 					setSpecificOrders(prevSpecificOrders => [...prevSpecificOrders, order])
 				}
 			}
@@ -207,6 +211,10 @@ export default function Delivery({value, setValue, user}) {
 					setData(prevData => {
 						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
 					})
+				} else if (status === 5 && order.status === 'Void') {
+					setData(prevData => {
+						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
+					})
 				}
 			} else {
 				if (status === 1 && (order.status === 'Done' || order.status === 'Pending') && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
@@ -222,6 +230,10 @@ export default function Delivery({value, setValue, user}) {
 						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
 					})
 				} else if (status === 4 && order.status === 'Archived' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
+					setData(prevData => {
+						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
+					})
+				} else if (status === 5 && order.status === 'Void' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 					setData(prevData => {
 						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Client: order.client_name, Area: order.location, OrderDollar: order.order_Dollar.toLocaleString(), OrderLBP: order.order_LBP.toLocaleString(), Delivery: order.delivery.toLocaleString(), isDollarDelivery: order.delivery_currency === "dollar" ? true : false, TotalInDollar: order.final_amount_Dollar.toLocaleString(), TotalInLBP: order.final_amount_LBP.toLocaleString()}]
 					})
@@ -253,6 +265,10 @@ export default function Delivery({value, setValue, user}) {
 					setSecondData(prevData => {
 						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Driver_Tax: order.driver_tax, Remaining_Amount_Dollar: order.remaining_amount_Dollar, Remaining_Amount_LBP: order.remaining_amount_LBP}]
 					})
+				} else if (status === 5 && order.status === 'Void') {
+					setSecondData(prevData => {
+						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Driver_Tax: order.driver_tax, Remaining_Amount_Dollar: order.remaining_amount_Dollar, Remaining_Amount_LBP: order.remaining_amount_LBP}]
+					})
 				}
 			} else {
 				if (status === 1 && (order.status === 'Done' || order.status === 'Pending') && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
@@ -268,6 +284,10 @@ export default function Delivery({value, setValue, user}) {
 						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Driver_Tax: order.driver_tax, Remaining_Amount_Dollar: order.remaining_amount_Dollar, Remaining_Amount_LBP: order.remaining_amount_LBP}]
 					})
 				} else if (status === 4 && order.status === 'Archived' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
+					setSecondData(prevData => {
+						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Driver_Tax: order.driver_tax, Remaining_Amount_Dollar: order.remaining_amount_Dollar, Remaining_Amount_LBP: order.remaining_amount_LBP}]
+					})
+				} else if (status === 5 && order.status === 'Void' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 					setSecondData(prevData => {
 						return [...prevData, {ID: order.order_id, Date: order.date, Dealer: order.dealer_name, Driver_Tax: order.driver_tax, Remaining_Amount_Dollar: order.remaining_amount_Dollar, Remaining_Amount_LBP: order.remaining_amount_LBP}]
 					})
@@ -325,6 +345,8 @@ export default function Delivery({value, setValue, user}) {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							} else if (status === 4 && order.status === 'Archived') {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
+							} else if (status === 5 && order.status === 'Void') {
+								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							}
 						} else {
 							if (status === 1 && (order.status === 'Done' || order.status === 'Pending') && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]){
@@ -334,6 +356,8 @@ export default function Delivery({value, setValue, user}) {
 							} else if (status === 3 && order.status === 'Pending' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							} else if (status === 4 && order.status === 'Archived' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
+								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
+							} else if (status === 5 && order.status === 'Void' && orderDate >= dateFilter[0] && orderDate <= dateFilter[1]) {
 								return <MyTableRow key={order.id} id={order.id} order_id={order.order_id} dealer_name={order.dealer_name} client_name={order.client_name} location={order.location} order_Dollar={order.order_Dollar} order_LBP={order.order_LBP} delivery={order.delivery} delivery_currency={order.delivery_currency} final_amount_LBP={order.final_amount_LBP} final_amount_Dollar={order.final_amount_Dollar} driver_tax={order.driver_tax} driver_tax_Currency={order.driver_tax_Currency} remaining_amount_Dollar={order.remaining_amount_Dollar} remaining_amount_LBP={order.remaining_amount_LBP} items={order.items} date={order.date} user={order.user} status={order.status} />
 							}
 						}
